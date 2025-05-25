@@ -214,7 +214,11 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <!-- Tambahkan tombol logout -->
+                        <li>
+                        <a href="#" @click.prevent="logout">
+                            <i class="fa fa-sign-out fa-fw"></i> Logout
+                        </a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -238,53 +242,52 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <router-link to="/dashborad"> <i class="fa fa-dashboard fa-fw"></i> Dashboard </router-link>
+                            <router-link to="/dashboard"> <i class="fa fa-dashboard fa-fw"></i> Dashboard </router-link>
                         </li>
                         <!--saya menambahkan disini-->
                         <li>
-                            <router-link to="/users">  <i class="fa fa-user fa-fw"></i> Pengguna </router-link>
+                            <router-link to="/user">  <i class="fa fa-user fa-fw"></i> Pengguna </router-link>
                         </li>
                         <li>
-                            <router-link to="/company-profile">  <i class="fa fa-building-o fa-fw"></i> Profil Perusahaan </router-link>
+                            <router-link to="/profil-perusahaan">  <i class="fa fa-building-o fa-fw"></i> Profil Perusahaan </router-link>
                         </li>
                         <li>
-                            <router-link to="/accounts">  <i class="fa fa-list-ol fa-fw"></i> Akun </router-link>
+                            <router-link to="/akun">  <i class="fa fa-list-ol fa-fw"></i> Akun </router-link>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="#"><i class="fa fa-money fa-fw"></i> Kas dan Bank<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <router-link to="/cash-in" ><i class="fa fa-chevron-circle-down fa-fw"></i>  Uang Masuk </router-link>
+                                    <router-link to="/kas-masuk" ><i class="fa fa-chevron-circle-down fa-fw"></i>  Uang Masuk </router-link>
                                 </li>
                                 <li>
-                                    <router-link to="/cash-out"> <i class="fa  fa-chevron-circle-up fa-fw"></i> Uang Keluar </router-link>
+                                    <router-link to="/kas-keluar"> <i class="fa  fa-chevron-circle-up fa-fw"></i> Uang Keluar </router-link>
                                 </li>
                             </ul>
-                            <!-- /.nav-second-level -->
+                        </li> -->
+                        <li>
+                            <router-link to="/jurnal-umum">  <i class="fa fa-pencil-square fa-fw"></i> Jurnal Umum </router-link>
                         </li>
                         <li>
-                            <router-link to="/journal">  <i class="fa fa-pencil-square fa-fw"></i> Jurnal Umum </router-link>
+                            <router-link to="/buku-besar">  <i class="fa fa-book fa-fw"></i> Buku Besar </router-link>
                         </li>
                         <li>
-                            <router-link to="/ledger">  <i class="fa fa-book fa-fw"></i> Buku Besar </router-link>
-                        </li>
-                        <li>
-                            <router-link to="/trial-balance">  <i class="fa fa-file fa-fw"></i> Neraca Saldo </router-link>
+                            <router-link to="/neraca-saldo">  <i class="fa fa-file fa-fw"></i> Neraca Saldo </router-link>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Laporan Keuangan<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <router-link to="/income-statement">  Laba Rugi </router-link>
+                                    <router-link to="/laba-rugi">  Laba Rugi </router-link>
                                 </li>
                                 <li>
-                                    <router-link to="/capital-change">  Perubahan Modal </router-link>
+                                    <router-link to="/perubahan-modal">  Perubahan Modal </router-link>
                                 </li>
                                 <li>
-                                    <router-link to="/balance-sheet">  Perubahan Modal </router-link>
+                                    <router-link to="/neraca">  Neraca </router-link>
                                 </li>
                                 <li>
-                                    <router-link to="/cash-flow">  Arus Kas </router-link>
+                                    <router-link to="/arus-kas">  Arus Kas </router-link>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -303,11 +306,44 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Home',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  methods: {
+    async logout () {
+      try {
+        const token = localStorage.getItem('auth_token')
+        if (!token) {
+          alert('Anda sudah logout.')
+          this.$router.push('/login')
+          return
+        }
+
+        // Kirim permintaan logout ke backend
+        await axios.post(
+          'http://localhost:8000/api/logout',
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        )
+
+        // Hapus token dari localStorage
+        localStorage.removeItem('auth_token')
+
+        // Redirect ke halaman login
+        this.$router.push('/login')
+      } catch (error) {
+        console.error('Gagal logout:', error)
+        alert('Gagal logout. Silakan coba lagi.')
+      }
     }
   }
 }
