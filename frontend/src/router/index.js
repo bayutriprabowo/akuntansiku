@@ -7,6 +7,9 @@ import Login from '@/components/pages/Login'
 import Journal from '@/components/Journal' // Nama komponen tetap Journal
 import Account from '@/components/Account.vue'
 import User from '@/components/User.vue'
+import CompanyProfile from '../components/CompanyProfile.vue'
+import Ledger from '../components/Ledger.vue'
+import TrialBalance from '../components/TrialBalance.vue'
 
 Vue.use(Router)
 
@@ -22,7 +25,10 @@ const router = new Router({
         { path: 'user', name: 'User', component: User }, // Path relatif terhadap '/'
         // Sesuaikan path agar konsisten dengan prefix API backend
         { path: 'jurnal-umum', name: 'Journal', component: Journal }, // Path relatif terhadap '/'
-        { path: 'akun', name: 'Account', component: Account } // Path relatif terhadap '/'
+        { path: 'akun', name: 'Account', component: Account }, // Path relatif terhadap '/'
+        { path: 'profil-perusahaan', name: 'CompanyProfile', component: CompanyProfile },
+        { path: 'buku-besar', name: 'Ledger', component: Ledger },
+        { path: 'neraca-saldo', name: 'TrialBalance', component: TrialBalance }
       ],
       // Redirect default dari '/' ke '/dashboard' jika Home diakses langsung
       redirect: '/dashboard'

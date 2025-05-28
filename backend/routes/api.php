@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController; // Pastikan ini di-import
 use App\Http\Controllers\JurnalUmumController;
+use App\Http\Controllers\ProfilPerusahaanController;
+use App\Http\Controllers\BukuBesarController;
+use App\Http\Controllers\NeracaSaldoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,11 +55,22 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/import', 'import');  // POST /api/jurnal-umum/import (Import journal entries)
     });
 
+    Route::prefix('profil-perusahaan')->controller(ProfilPerusahaanController::class)->group(function () {
+        Route::get('/', 'show');             // GET /api/profil-perusahaan (Get company profile)
+        Route::post('/', 'storeOrUpdate');  // POST /api/profil-perusahaan (Create or update company profile)
+        Route::put('/', 'storeOrUpdate');   // PUT /api/profil-perusahaan (Update company profile)
+        Route::delete('/', 'destroy');      // DELETE /api/profil-perusahaan (Delete company profile)
+    });
+
     // Rute untuk mendapatkan data user yang sedang login (contoh)
     Route::get('/user-profile', function (Request $request) {
         // Pastikan hanya mengembalikan data yang aman
         return response()->json($request->user()->only(['id', 'name', 'username', 'email', 'role', 'status']));
     })->name('user.profile');
+
+    Route::get('/buku-besar', [BukuBesarController::class, 'index']); // GET /api/buku-besar
+
+    Route::get('/neraca-saldo', [NeracaSaldoController::class, 'index']); // GET /api/neraca-saldo
 
     // Tambahkan rute lain yang memerlukan autentikasi di sini
 });
