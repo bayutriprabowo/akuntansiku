@@ -4,6 +4,11 @@
     <div class="row">
       <div class="col-lg-12">
         <h1 class="page-header">Neraca Saldo</h1>
+        <div class="filter">
+          <label>Dari: <input type="date" v-model="startDate" /></label>
+          <label>Sampai: <input type="date" v-model="endDate" /></label>
+          <button @click="fetchTrialBalance">Filter</button>
+        </div>
         <p v-if="apiError" style="color: red;">Error: {{ apiError }}</p>
       </div>
     </div>
@@ -55,6 +60,8 @@ export default {
   data () {
     return {
       trialBalanceEntries: [], // Data neraca saldo
+      startDate: '', // Tanggal awal
+      endDate: '', // Tanggal akhir
       apiError: null
     }
   },
@@ -90,7 +97,18 @@ export default {
       const headers = this.getAuthHeaders()
       if (!headers) return
       try {
-        const response = await axios.get('http://localhost:8000/api/neraca-saldo', { headers })
+        let url = 'http://localhost:8000/api/neraca-saldo'
+        const params = []
+        if (this.startDate) {
+          params.push(`start_date=${this.startDate}`)
+        }
+        if (this.endDate) {
+          params.push(`end_date=${this.endDate}`)
+        }
+        if (params.length > 0) {
+          url += `?${params.join('&')}`
+        }
+        const response = await axios.get(url, { headers })
         this.trialBalanceEntries = response.data.map(entry => {
           const saldo =
             entry.tipe_debit_kredit === 'debit'

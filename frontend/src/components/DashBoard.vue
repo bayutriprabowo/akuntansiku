@@ -14,21 +14,43 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-comments fa-5x"></i>
+                                    <i class="fa fa-bar-chart fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">26</div>
-                                    <div>New Comments!</div>
+                                    <div class="huge">Laba Rugi</div>
+                                    <div>Laporan Keuangan</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <router-link to="/laba-rugi">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
-                        </a>
+                        </router-link>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-bar-chart fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">Neraca</div>
+                                    <div>Laporan Keuangan</div>
+                                </div>
+                            </div>
+                        </div>
+                        <router-link to="/neraca">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </router-link>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -36,21 +58,21 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-tasks fa-5x"></i>
+                                    <i class="fa fa-pencil-square fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
-                                    <div>New Tasks!</div>
+                                    <div class="huge">Jurnal</div>
+                                    <div>Umum</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <router-link to="/jurnal-umum">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
-                        </a>
+                        </router-link>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -58,21 +80,21 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-shopping-cart fa-5x"></i>
+                                    <i class="fa fa-book fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
-                                    <div>New Orders!</div>
+                                    <div class="huge">Buku</div>
+                                    <div>Besar</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <router-link to="/buku-besar">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
-                        </a>
+                        </router-link>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -80,26 +102,26 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-support fa-5x"></i>
+                                    <i class="fa fa-file fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
-                                    <div>Support Tickets!</div>
+                                    <div class="huge">Neraca</div>
+                                    <div>Saldo</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <router-link to="/neraca-saldo">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
-                        </a>
+                        </router-link>
                     </div>
                 </div>
             </div>
             <!-- /.row -->
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-lg-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -123,15 +145,15 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
+                        <!-- <div class="panel-body">
                             <div id="morris-area-chart"></div>
-                        </div>
+                        </div> -->
                         <!-- /.panel-body -->
-                    </div>
+                    <!-- </div> -->
                     <!-- /.panel -->
-                    <div class="panel panel-default">
+                    <!-- <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-bar-chart-o fa-fw"></i> Bar Chart Example
                             <div class="pull-right">
@@ -153,9 +175,9 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
+                        <!-- <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="table-responsive">
@@ -219,26 +241,26 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div>
+                                    </div> -->
                                     <!-- /.table-responsive -->
-                                </div>
+                                <!-- </div> -->
                                 <!-- /.col-lg-4 (nested) -->
-                                <div class="col-lg-8">
-                                    <div id="morris-bar-chart"></div>
-                                </div>
+                                <!-- <div class="col-lg-8">
+                                    <div id="morris-bar-chart"></div> -->
+                                <!-- </div> -->
                                 <!-- /.col-lg-8 (nested) -->
-                            </div>
+                            <!-- </div> -->
                             <!-- /.row -->
-                        </div>
+                        <!-- </div> -->
                         <!-- /.panel-body -->
-                    </div>
+                    <!-- </div> -->
                     <!-- /.panel -->
-                    <div class="panel panel-default">
+                    <!-- <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
-                        </div>
+                        </div> -->
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
+                        <!-- <div class="panel-body">
                             <ul class="timeline">
                                 <li>
                                     <div class="timeline-badge"><i class="fa fa-check"></i>
@@ -340,20 +362,20 @@
                                         </div>
                                     </div>
                                 </li>
-                            </ul>
-                        </div>
+                            </ul> -->
+                        <!-- </div> -->
                         <!-- /.panel-body -->
-                    </div>
+                    <!-- </div> -->
                     <!-- /.panel -->
-                </div>
+                <!-- </div> -->
                 <!-- /.col-lg-8 -->
-                <div class="col-lg-4">
+                <!-- <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-bell fa-fw"></i> Notifications Panel
-                        </div>
+                        </div> -->
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
+                        <!-- <div class="panel-body">
                             <div class="list-group">
                                 <a href="#" class="list-group-item">
                                     <i class="fa fa-comment fa-fw"></i> New Comment
@@ -400,25 +422,25 @@
                                     <span class="pull-right text-muted small"><em>Yesterday</em>
                                     </span>
                                 </a>
-                            </div>
+                            </div> -->
                             <!-- /.list-group -->
-                            <a href="#" class="btn btn-default btn-block">View All Alerts</a>
-                        </div>
+                            <!-- <a href="#" class="btn btn-default btn-block">View All Alerts</a>
+                        </div> -->
                         <!-- /.panel-body -->
-                    </div>
+                    <!-- </div> -->
                     <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
+                    <!-- <div class="panel panel-default"> -->
+                        <!-- <div class="panel-heading">
                             <i class="fa fa-bar-chart-o fa-fw"></i> Donut Chart Example
                         </div>
                         <div class="panel-body">
                             <div id="morris-donut-chart"></div>
                             <a href="#" class="btn btn-default btn-block">View Details</a>
-                        </div>
+                        </div> -->
                         <!-- /.panel-body -->
-                    </div>
+                    <!-- </div> -->
                     <!-- /.panel -->
-                    <div class="chat-panel panel panel-default">
+                    <!-- <div class="chat-panel panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-comments fa-fw"></i> Chat
                             <div class="btn-group pull-right">
@@ -454,9 +476,9 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
+                        <!-- <div class="panel-body">
                             <ul class="chat">
                                 <li class="left clearfix">
                                     <span class="chat-img pull-left">
@@ -520,9 +542,9 @@
                                     </div>
                                 </li>
                             </ul>
-                        </div>
+                        </div> -->
                         <!-- /.panel-body -->
-                        <div class="panel-footer">
+                        <!-- <div class="panel-footer">
                             <div class="input-group">
                                 <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
                                 <span class="input-group-btn">
@@ -531,13 +553,13 @@
                                     </button>
                                 </span>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- /.panel-footer -->
-                    </div>
+                    <!-- </div> -->
                     <!-- /.panel .chat-panel -->
-                </div>
+                <!-- </div> -->
                 <!-- /.col-lg-4 -->
-            </div>
+            <!-- </div> -->
             <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->
@@ -549,12 +571,38 @@ export default {
   name: 'DashBoard',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      user: null, // Data user yang sedang login
+      apiError: null // Error jika terjadi masalah autentikasi
     }
+  },
+  methods: {
+    getUserData () {
+      const token = localStorage.getItem('user-token') // Ambil token dari localStorage
+      if (!token) {
+        console.warn('Token tidak ditemukan. Redirect ke login.')
+        this.$router.push('/login') // Redirect ke halaman login jika token tidak ada
+        return
+      }
+
+      const userData = localStorage.getItem('user-data') // Ambil data user dari localStorage
+      if (userData) {
+        this.user = JSON.parse(userData)
+      } else {
+        console.warn('Data user tidak ditemukan. Redirect ke login.')
+        this.$router.push('/login') // Redirect ke login jika data user tidak ada
+      }
+    }
+  },
+  mounted () {
+    this.getUserData()
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.panel-footer {
+  cursor: pointer;
+}
 </style>

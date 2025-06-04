@@ -9,8 +9,8 @@
           <label>Sampai: <input type="date" v-model="endDate" /></label>
           <button @click="fetchJournalEntries">Filter</button>
         </div>
-        <input type="file" ref="fileInput" @change="importFromExcel" style="display: none;" />
-        <button @click="triggerFileInput">Upload Excel</button>
+        <!-- <input type="file" ref="fileInput" @change="importFromExcel" style="display: none;" />
+        <button @click="triggerFileInput">Upload Excel</button> -->
         <button @click="exportToExcel">Download Excel</button>
         <p v-if="apiError" style="color: red;">Error: {{ apiError }}</p>
       </div>
@@ -170,40 +170,40 @@ export default {
       const wb = XLSX.utils.book_new()
       XLSX.utils.book_append_sheet(wb, ws, 'Jurnal Umum')
       XLSX.writeFile(wb, 'jurnal_umum.xlsx')
-    },
-    triggerFileInput () {
-      this.$refs.fileInput.click()
-    },
-    async importFromExcel (event) {
-      const headers = this.getAuthHeaders()
-      if (!headers) return
-      const file = event.target.files[0]
-      if (!file) return
-      const reader = new FileReader()
-      reader.onload = async (e) => {
-        const data = new Uint8Array(e.target.result)
-        const workbook = XLSX.read(data, { type: 'array' })
-        const sheet = workbook.Sheets[workbook.SheetNames[0]]
-        const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 })
-
-        const entries = jsonData.slice(1).map(row => ({
-          kode: row[0],
-          nama_akun: row[1],
-          debit: Number(row[2]) || 0,
-          kredit: Number(row[3]) || 0,
-          tanggal: row[4]
-        }))
-
-        try {
-          await axios.post('http://localhost:8000/api/jurnal-umum/import', { entries }, { headers })
-          this.fetchJournalEntries()
-        } catch (error) {
-          console.error('Gagal mengimpor data:', error)
-          this.apiError = 'Gagal mengimpor data.'
-        }
-      }
-      reader.readAsArrayBuffer(file)
     }
+    // triggerFileInput () {
+    //   this.$refs.fileInput.click()
+    // },
+    // async importFromExcel (event) {
+    //   const headers = this.getAuthHeaders()
+    //   if (!headers) return
+    //   const file = event.target.files[0]
+    //   if (!file) return
+    //   const reader = new FileReader()
+    //   reader.onload = async (e) => {
+    //     const data = new Uint8Array(e.target.result)
+    //     const workbook = XLSX.read(data, { type: 'array' })
+    //     const sheet = workbook.Sheets[workbook.SheetNames[0]]
+    //     const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 })
+
+    //     const entries = jsonData.slice(1).map(row => ({
+    //       kode: row[0],
+    //       nama_akun: row[1],
+    //       debit: Number(row[2]) || 0,
+    //       kredit: Number(row[3]) || 0,
+    //       tanggal: row[4]
+    //     }))
+
+    //     try {
+    //       await axios.post('http://localhost:8000/api/jurnal-umum/import', { entries }, { headers })
+    //       this.fetchJournalEntries()
+    //     } catch (error) {
+    //       console.error('Gagal mengimpor data:', error)
+    //       this.apiError = 'Gagal mengimpor data.'
+    //     }
+    //   }
+    //   reader.readAsArrayBuffer(file)
+    // }
   },
   mounted () {
     this.fetchJournalEntries()

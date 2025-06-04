@@ -9,6 +9,8 @@ use App\Http\Controllers\JurnalUmumController;
 use App\Http\Controllers\ProfilPerusahaanController;
 use App\Http\Controllers\BukuBesarController;
 use App\Http\Controllers\NeracaSaldoController;
+use App\Http\Controllers\LabaRugiController;
+use App\Http\Controllers\NeracaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +73,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/buku-besar', [BukuBesarController::class, 'index']); // GET /api/buku-besar
 
     Route::get('/neraca-saldo', [NeracaSaldoController::class, 'index']); // GET /api/neraca-saldo
+
+    Route::get('/laba-rugi', [LabaRugiController::class, 'index']); // GET /api/laba-rugi
+
+    Route::get('/neraca', [NeracaController::class, 'index']); // GET /api/neraca
 
     // Tambahkan rute lain yang memerlukan autentikasi di sini
 });

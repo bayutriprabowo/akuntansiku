@@ -10,6 +10,8 @@ import User from '@/components/User.vue'
 import CompanyProfile from '../components/CompanyProfile.vue'
 import Ledger from '../components/Ledger.vue'
 import TrialBalance from '../components/TrialBalance.vue'
+import IncomeStatement from '../components/IncomeStatement.vue'
+import BalanceSheet from '../components/BalanceSheet.vue'
 
 Vue.use(Router)
 
@@ -28,7 +30,9 @@ const router = new Router({
         { path: 'akun', name: 'Account', component: Account }, // Path relatif terhadap '/'
         { path: 'profil-perusahaan', name: 'CompanyProfile', component: CompanyProfile },
         { path: 'buku-besar', name: 'Ledger', component: Ledger },
-        { path: 'neraca-saldo', name: 'TrialBalance', component: TrialBalance }
+        { path: 'neraca-saldo', name: 'TrialBalance', component: TrialBalance },
+        { path: 'laba-rugi', name: 'IncomeStatement', component: IncomeStatement },
+        { path: 'neraca', name: 'BalanceSheet', component: BalanceSheet }
       ],
       // Redirect default dari '/' ke '/dashboard' jika Home diakses langsung
       redirect: '/dashboard'

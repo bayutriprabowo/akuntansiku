@@ -13,6 +13,9 @@
               </option>
             </select>
           </label>
+          <label>Dari: <input type="date" v-model="startDate" /></label>
+          <label>Sampai: <input type="date" v-model="endDate" /></label>
+          <button @click="fetchLedger">Filter</button>
         </div>
         <p v-if="apiError" style="color: red;">Error: {{ apiError }}</p>
       </div>
@@ -59,6 +62,8 @@ export default {
     return {
       accounts: [], // Daftar akun
       selectedAccount: '', // Akun yang dipilih
+      startDate: '', // Tanggal awal
+      endDate: '', // Tanggal akhir
       ledgerEntries: [], // Data buku besar
       apiError: null
     }
@@ -92,8 +97,18 @@ export default {
       if (!headers) return
       try {
         let url = 'http://localhost:8000/api/buku-besar'
+        const params = []
         if (this.selectedAccount) {
-          url += `?kode_akun=${this.selectedAccount}`
+          params.push(`kode_akun=${this.selectedAccount}`)
+        }
+        if (this.startDate) {
+          params.push(`start_date=${this.startDate}`)
+        }
+        if (this.endDate) {
+          params.push(`end_date=${this.endDate}`)
+        }
+        if (params.length > 0) {
+          url += `?${params.join('&')}`
         }
         const response = await axios.get(url, { headers })
         this.ledgerEntries = response.data

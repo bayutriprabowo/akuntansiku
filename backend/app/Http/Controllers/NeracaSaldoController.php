@@ -10,15 +10,19 @@ class NeracaSaldoController extends Controller
     /**
      * Get trial balance data.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Ambil data dari Jurnal Umum
-        $entries = JurnalUmum::join('akuns', 'jurnal_umums.kode', '=', 'akuns.kode')
+        $query = JurnalUmum::join('akuns', 'jurnal_umums.kode', '=', 'akuns.kode')
             ->select('jurnal_umums.kode', 'akuns.nama_akun', 'akuns.tipe_debit_kredit')
             ->selectRaw('SUM(jurnal_umums.debit) as total_debit, SUM(jurnal_umums.kredit) as total_kredit')
-            ->groupBy('jurnal_umums.kode', 'akuns.nama_akun', 'akuns.tipe_debit_kredit')
-            ->orderBy('jurnal_umums.kode', 'asc')
-            ->get();
+            ->groupBy('jurnal_umums.kode', 'akuns.nama_akun', 'akuns.tipe_debit_kredit');
+
+        // Filter berdasarkan tanggal jika ada
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $query->whereBetween('jurnal_umums.tanggal', [$request->start_date, $request->end_date]);
+        }
+
+        $entries = $query->orderBy('jurnal_umums.kode', 'asc')->get();
 
         // Format data untuk frontend
         $trialBalance = $entries->map(function ($entry) {

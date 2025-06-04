@@ -19,6 +19,11 @@ class BukuBesarController extends Controller
             $query->where('kode', $request->kode_akun);
         }
 
+        // Filter berdasarkan tanggal jika ada
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $query->whereBetween('tanggal', [$request->start_date, $request->end_date]);
+        }
+
         $entries = $query->orderBy('tanggal', 'asc')->get();
 
         // Hitung saldo berjalan
