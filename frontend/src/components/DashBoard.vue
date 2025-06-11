@@ -9,6 +9,8 @@
             </div>
             <!-- /.row -->
             <div class="row">
+              <!-- Menu untuk Admin dan Direktur -->
+              <template v-if="userRole === 'admin' || userRole === 'direktur'">
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -53,6 +55,10 @@
                         </router-link>
                     </div>
                 </div>
+              </template>
+
+              <!-- Menu untuk Admin dan User -->
+              <template v-if="userRole === 'admin' || userRole === 'user'">
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-green">
                         <div class="panel-heading">
@@ -119,6 +125,7 @@
                         </router-link>
                     </div>
                 </div>
+              </template>
             </div>
             <!-- /.row -->
             <!-- <div class="row">
@@ -567,13 +574,15 @@
 </template>
 
 <script>
+
 export default {
   name: 'DashBoard',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
       user: null, // Data user yang sedang login
-      apiError: null // Error jika terjadi masalah autentikasi
+      apiError: null, // Error jika terjadi masalah autentikasi
+      userRole: null // Role pengguna yang sedang login
     }
   },
   methods: {
@@ -592,10 +601,20 @@ export default {
         console.warn('Data user tidak ditemukan. Redirect ke login.')
         this.$router.push('/login') // Redirect ke login jika data user tidak ada
       }
+    },
+    getUserRole () {
+      const userData = localStorage.getItem('user-data')
+      if (userData) {
+        const user = JSON.parse(userData)
+        this.userRole = user.role // Ambil role dari data user
+      } else {
+        this.$router.push('/login') // Redirect ke login jika data user tidak ditemukan
+      }
     }
   },
   mounted () {
     this.getUserData()
+    this.getUserRole()
   }
 }
 </script>
