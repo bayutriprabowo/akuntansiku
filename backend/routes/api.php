@@ -37,7 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', 'store');
         Route::put('/{id}', 'update');
         Route::delete('/{id}', 'destroy');
-        Route::post('/import', 'import');
+        // Route::post('/import', 'import');
     });
 
     Route::prefix('akun')->controller(AkunController::class)->group(function () {
@@ -46,7 +46,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{id}', 'show');       // GET /api/akun/{id} (Show account)
         Route::put('/{id}', 'update');     // PUT /api/akun/{id} (Update account)
         Route::delete('/{id}', 'destroy'); // DELETE /api/akun/{id} (Delete account)
-        Route::post('/import', 'import');  // POST /api/akun/import (Import accounts)
+        // Route::post('/import', 'import');  // POST /api/akun/import (Import accounts)
     });
 
     // Tambahkan rute untuk Jurnal Umum
@@ -54,7 +54,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', 'index');          // GET /api/jurnal-umum (Fetch journal entries)
         Route::post('/', 'store');         // POST /api/jurnal-umum (Add journal entry)
         Route::delete('/{id}', 'destroy'); // DELETE /api/jurnal-umum/{id} (Delete journal entry)
-        Route::post('/import', 'import');  // POST /api/jurnal-umum/import (Import journal entries)
+        // Route::post('/import', 'import');  // POST /api/jurnal-umum/import (Import journal entries)
     });
 
     Route::prefix('profil-perusahaan')->controller(ProfilPerusahaanController::class)->group(function () {
@@ -65,10 +65,10 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // Rute untuk mendapatkan data user yang sedang login (contoh)
-    Route::get('/user-profile', function (Request $request) {
-        // Pastikan hanya mengembalikan data yang aman
-        return response()->json($request->user()->only(['id', 'name', 'username', 'email', 'role', 'status']));
-    })->name('user.profile');
+    // Route::get('/user-profile', function (Request $request) {
+    //     // Pastikan hanya mengembalikan data yang aman
+    //     return response()->json($request->user()->only(['id', 'name', 'username', 'email', 'role', 'status']));
+    // })->name('user.profile');
 
     Route::get('/buku-besar', [BukuBesarController::class, 'index']); // GET /api/buku-besar
 

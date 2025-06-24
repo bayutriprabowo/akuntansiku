@@ -17,8 +17,8 @@
           </label>
           <button @click="fetchUsers">Filter</button>
         </div>
-        <input type="file" ref="fileInput" @change="importFromExcel" style="display: none;" accept=".xlsx, .xls" />
-        <button @click="triggerFileInput">Upload Excel</button>
+        <!-- <input type="file" ref="fileInput" @change="importFromExcel" style="display: none;" accept=".xlsx, .xls" />
+        <button @click="triggerFileInput">Upload Excel</button> -->
         <button @click="exportToExcel">Download Excel</button>
         <p v-if="apiError" style="color: red;">Error: {{ apiError }}</p>
       </div>
@@ -297,107 +297,107 @@ export default {
       const wb = XLSX.utils.book_new()
       XLSX.utils.book_append_sheet(wb, ws, 'User') // Nama sheet 'User'
       XLSX.writeFile(wb, 'daftar_user.xlsx') // Nama file
-    },
-
-    triggerFileInput () {
-      this.$refs.fileInput.value = null // Reset input file
-      this.$refs.fileInput.click()
-    },
-
-    async importFromExcel (event) {
-      this.apiError = null
-      const headers = this.getAuthHeaders()
-      if (!headers) return
-
-      const file = event.target.files[0]
-      if (!file) return
-
-      const reader = new FileReader()
-      reader.onload = async (e) => {
-        try {
-          const data = new Uint8Array(e.target.result)
-          const workbook = XLSX.read(data, { type: 'array' })
-          const sheetName = workbook.SheetNames[0]
-          const worksheet = workbook.Sheets[sheetName]
-          // Konversi ke JSON, header: 1 menghasilkan array of arrays
-          const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: false, defval: '' }) // raw: false agar format lebih baik, defval untuk sel kosong
-
-          if (jsonData.length < 2) { // Minimal 1 baris header + 1 baris data
-            this.apiError = 'File Excel kosong atau hanya berisi header.'
-            setTimeout(() => { this.apiError = null }, 3000)
-            return
-          }
-
-          // Ambil header dan normalisasi (lowercase, trim)
-          const headerRow = jsonData[0].map(h => String(h).trim().toLowerCase())
-          const expectedHeaders = ['username', 'email', 'nama', 'password', 'role', 'status'] // Sesuaikan urutan & nama
-
-          // Validasi header
-          if (headerRow.length !== expectedHeaders.length || !expectedHeaders.every((h, i) => headerRow[i] === h)) {
-            this.apiError = `Format header Excel tidak sesuai. Harusnya: ${expectedHeaders.join(', ')}. Ditemukan: ${headerRow.join(', ')}`
-            setTimeout(() => { this.apiError = null }, 5000)
-            return
-          }
-
-          // Map data dari baris setelah header
-          const entriesToImport = jsonData.slice(1)
-            .map((row, rowIndex) => {
-              // Buat objek berdasarkan header
-              const entry = {}
-              headerRow.forEach((header, index) => {
-                entry[header] = row[index] !== undefined ? String(row[index]).trim() : '' // Trim value
-              })
-              // Tambahkan nomor baris asli untuk referensi error jika perlu
-              entry._originalRow = rowIndex + 2
-              return entry
-            })
-            .filter(entry => {
-              // Filter baris yang benar-benar kosong
-              return Object.values(entry).some(val => val !== '' && val !== entry._originalRow)
-            })
-            .filter(entry => {
-              // Validasi dasar per baris (contoh: field wajib)
-              const isValid = entry.username && entry.email && entry.password && entry.role && entry.status
-              if (!isValid) {
-                console.warn(`Baris ${entry._originalRow}: Melewati baris karena data tidak lengkap.`, entry)
-              }
-              // Validasi tambahan (misal format email, nilai role/status) bisa ditambahkan di sini
-              const validRoles = this.klasifikasiUser
-              const validStatuses = ['aktif', 'nonaktif']
-              if (!validRoles.includes(entry.role)) {
-                console.warn(`Baris ${entry._originalRow}: Role tidak valid ('${entry.role}').`, entry)
-                return false
-              }
-              if (!validStatuses.includes(entry.status)) {
-                console.warn(`Baris ${entry._originalRow}: Status tidak valid ('${entry.status}').`, entry)
-                return false
-              }
-              return isValid
-            })
-
-          if (entriesToImport.length === 0) {
-            this.apiError = 'Tidak ada data valid untuk diimpor dari file Excel setelah validasi.'
-            setTimeout(() => { this.apiError = null }, 3000)
-            return
-          }
-
-          // Kirim data yang valid ke backend
-          // Backend harus bisa menerima array objek dalam body request
-          await axios.post('http://localhost:8000/api/user/import', { users: entriesToImport }, { headers }) // Kirim dalam key 'users' (sesuaikan dengan backend)
-
-          alert(`Berhasil memproses ${entriesToImport.length} user dari file Excel.`)
-          this.fetchUsers() // Refresh daftar user
-        } catch (error) {
-          this.handleApiError(error, 'mengimpor data dari Excel')
-        }
-      }
-      reader.onerror = (error) => {
-        console.error('Gagal membaca file:', error)
-        this.apiError = 'Gagal membaca file Excel.'
-        setTimeout(() => { this.apiError = null }, 3000)
-      }
-      reader.readAsArrayBuffer(file)
     }
+
+    // triggerFileInput () {
+    //   this.$refs.fileInput.value = null // Reset input file
+    //   this.$refs.fileInput.click()
+    // },
+
+    // async importFromExcel (event) {
+    //   this.apiError = null
+    //   const headers = this.getAuthHeaders()
+    //   if (!headers) return
+
+    //   const file = event.target.files[0]
+    //   if (!file) return
+
+    //   const reader = new FileReader()
+    //   reader.onload = async (e) => {
+    //     try {
+    //       const data = new Uint8Array(e.target.result)
+    //       const workbook = XLSX.read(data, { type: 'array' })
+    //       const sheetName = workbook.SheetNames[0]
+    //       const worksheet = workbook.Sheets[sheetName]
+    //       // Konversi ke JSON, header: 1 menghasilkan array of arrays
+    //       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: false, defval: '' }) // raw: false agar format lebih baik, defval untuk sel kosong
+
+    //       if (jsonData.length < 2) { // Minimal 1 baris header + 1 baris data
+    //         this.apiError = 'File Excel kosong atau hanya berisi header.'
+    //         setTimeout(() => { this.apiError = null }, 3000)
+    //         return
+    //       }
+
+    //       // Ambil header dan normalisasi (lowercase, trim)
+    //       const headerRow = jsonData[0].map(h => String(h).trim().toLowerCase())
+    //       const expectedHeaders = ['username', 'email', 'nama', 'password', 'role', 'status'] // Sesuaikan urutan & nama
+
+    //       // Validasi header
+    //       if (headerRow.length !== expectedHeaders.length || !expectedHeaders.every((h, i) => headerRow[i] === h)) {
+    //         this.apiError = `Format header Excel tidak sesuai. Harusnya: ${expectedHeaders.join(', ')}. Ditemukan: ${headerRow.join(', ')}`
+    //         setTimeout(() => { this.apiError = null }, 5000)
+    //         return
+    //       }
+
+    //       // Map data dari baris setelah header
+    //       const entriesToImport = jsonData.slice(1)
+    //         .map((row, rowIndex) => {
+    //           // Buat objek berdasarkan header
+    //           const entry = {}
+    //           headerRow.forEach((header, index) => {
+    //             entry[header] = row[index] !== undefined ? String(row[index]).trim() : '' // Trim value
+    //           })
+    //           // Tambahkan nomor baris asli untuk referensi error jika perlu
+    //           entry._originalRow = rowIndex + 2
+    //           return entry
+    //         })
+    //         .filter(entry => {
+    //           // Filter baris yang benar-benar kosong
+    //           return Object.values(entry).some(val => val !== '' && val !== entry._originalRow)
+    //         })
+    //         .filter(entry => {
+    //           // Validasi dasar per baris (contoh: field wajib)
+    //           const isValid = entry.username && entry.email && entry.password && entry.role && entry.status
+    //           if (!isValid) {
+    //             console.warn(`Baris ${entry._originalRow}: Melewati baris karena data tidak lengkap.`, entry)
+    //           }
+    //           // Validasi tambahan (misal format email, nilai role/status) bisa ditambahkan di sini
+    //           const validRoles = this.klasifikasiUser
+    //           const validStatuses = ['aktif', 'nonaktif']
+    //           if (!validRoles.includes(entry.role)) {
+    //             console.warn(`Baris ${entry._originalRow}: Role tidak valid ('${entry.role}').`, entry)
+    //             return false
+    //           }
+    //           if (!validStatuses.includes(entry.status)) {
+    //             console.warn(`Baris ${entry._originalRow}: Status tidak valid ('${entry.status}').`, entry)
+    //             return false
+    //           }
+    //           return isValid
+    //         })
+
+    //       if (entriesToImport.length === 0) {
+    //         this.apiError = 'Tidak ada data valid untuk diimpor dari file Excel setelah validasi.'
+    //         setTimeout(() => { this.apiError = null }, 3000)
+    //         return
+    //       }
+
+    //       // Kirim data yang valid ke backend
+    //       // Backend harus bisa menerima array objek dalam body request
+    //       await axios.post('http://localhost:8000/api/user/import', { users: entriesToImport }, { headers }) // Kirim dalam key 'users' (sesuaikan dengan backend)
+
+    //       alert(`Berhasil memproses ${entriesToImport.length} user dari file Excel.`)
+    //       this.fetchUsers() // Refresh daftar user
+    //     } catch (error) {
+    //       this.handleApiError(error, 'mengimpor data dari Excel')
+    //     }
+    //   }
+    //   reader.onerror = (error) => {
+    //     console.error('Gagal membaca file:', error)
+    //     this.apiError = 'Gagal membaca file Excel.'
+    //     setTimeout(() => { this.apiError = null }, 3000)
+    //   }
+    //   reader.readAsArrayBuffer(file)
+    // }
   },
   mounted () {
     // Panggil fetchUsers saat komponen dimuat
